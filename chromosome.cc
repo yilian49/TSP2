@@ -24,6 +24,7 @@ Chromosome::~Chromosome()
   assert(is_valid());
 }
 
+
 //////////////////////////////////////////////////////////////////////////////
 // Perform a single mutation on this chromosome
 void
@@ -92,12 +93,19 @@ Chromosome::get_fitness() const
 bool
 Chromosome::is_valid() const
 {
-  // Add your implementation here
+    Cities::permutation_t temp = order_;
+    std::sort(temp.begin(), temp.end());
+
+    for(unsigned long int i=0; i < order_.size(); i++){
+      assert(temp[i]!=i);  //{return false;}
+    }
+    std::cout << "true";
 }
 
 // Find whether a certain value appears in a given range of the chromosome.
 // Returns true if value is within the specified the range specified
 // [begin, end) and false otherwise.
+
 bool
 Chromosome::is_in_range(unsigned value, unsigned begin, unsigned end) const
 {
