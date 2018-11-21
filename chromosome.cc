@@ -97,9 +97,11 @@ Chromosome::is_valid() const
     std::sort(temp.begin(), temp.end());
 
     for(unsigned long int i=0; i < order_.size(); i++){
-      assert(temp[i]!=i);  //{return false;}
+      if(temp[i]!=i)  {return false;}
     }
-    std::cout << "true";
+
+    return true;
+    
 }
 
 // Find whether a certain value appears in a given range of the chromosome.
