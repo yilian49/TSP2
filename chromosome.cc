@@ -18,6 +18,7 @@ Chromosome::Chromosome(const Cities* cities_ptr)
     score_(get_fitness())
 {
   assert(is_valid());
+  std::cout << "Creation success";
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -52,6 +53,7 @@ Chromosome::mutate()
 //////////////////////////////////////////////////////////////////////////////
 // Return a pair of offsprings by recombining with another chromosome
 // Note: this method allocates memory for the new offsprings
+/*
 std::pair<Chromosome*, Chromosome*>
 Chromosome::recombine(const Chromosome* other)
 {
@@ -60,7 +62,7 @@ Chromosome::recombine(const Chromosome* other)
 
   // Add your implementation here
 }
-
+*/
 //////////////////////////////////////////////////////////////////////////////
 // For an ordered set of parents, return a child using the ordered crossover.
 // The child will have the same values as p1 in the range [b,e),
@@ -132,5 +134,9 @@ Chromosome::is_valid() const
 bool
 Chromosome::is_in_range(unsigned value, unsigned begin, unsigned end) const
 {
-  // Add your implementation here
+  for(unsigned int i = begin; i < end; i++){
+    if(order_[i] == value)  {return true;}
+  }
+
+  return false;
 }
