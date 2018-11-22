@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <cassert>
 #include <random>
+#include <stdlib.h>
+#include <time.h>
 
 #include "chromosome.hh"
 
@@ -30,7 +32,18 @@ Chromosome::~Chromosome()
 void
 Chromosome::mutate()
 {
-  // Add your implementation here
+  
+  int i, j;
+
+  i = rand() % order_.size();
+  j = rand() % order_.size();
+
+  /*  To make sure i!=j */
+  while(i == j){
+    j = rand() % order_.size();
+  }
+
+  std::swap(order_[i], order_[j]);
 
   assert(is_valid());
 }
@@ -84,7 +97,8 @@ Chromosome::create_crossover_child(const Chromosome* p1, const Chromosome* p2,
 double
 Chromosome::get_fitness() const
 {
-  // Add your implementation here
+  double total_distance = this->calculate_total_distance();
+
 }
 
 // A chromsome is valid if it has no repeated values in its permutation,
