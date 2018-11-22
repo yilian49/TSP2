@@ -14,7 +14,8 @@
 // Generate a completely random permutation from a list of cities
 Chromosome::Chromosome(const Cities* cities_ptr)
   : cities_ptr_(cities_ptr),
-    order_(random_permutation(cities_ptr->size()))
+    order_(random_permutation(cities_ptr->size())),
+    score_(get_fitness())
 {
   assert(is_valid());
 }
