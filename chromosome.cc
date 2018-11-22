@@ -97,8 +97,14 @@ Chromosome::create_crossover_child(const Chromosome* p1, const Chromosome* p2,
 double
 Chromosome::get_fitness() const
 {
-  double total_distance = this->calculate_total_distance();
+  double score;
 
+  /*Assuming a total_distance above 1500 miles for a TSP renders negative profit,
+    giving each unit of distance a cost of -4, our score is our maximum subtracting
+    our cost. Hence, shorter distances have a higher score */
+
+  score = 6000 - 4 * (this->calculate_total_distance());
+  return score;  
 }
 
 // A chromsome is valid if it has no repeated values in its permutation,
