@@ -71,6 +71,8 @@ class Chromosome {
                          unsigned begin,
                          unsigned end) const;
 
+  double random_double() const;
+
   // A chromsome is valid if it has no repeated values in its permutation,
   // as well as no indices above the range (length) of the chromosome.
   bool is_valid() const;
