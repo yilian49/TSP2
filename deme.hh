@@ -4,7 +4,7 @@
  */
 
 #pragma once
-
+#include <chrono>
 #include "chromosome.hh"
 #include "cities.hh"
 
@@ -40,10 +40,11 @@ class Deme {
   std::vector<Chromosome*> pop_;  // Population of Chromosomes
   
   double random_double() const;
-//  std::vector<Chromosome*> child_pop_; // Population of temp Chromosomes produced by recombining parents
+  std::vector<Chromosome*> child_pop_; // Population of temp Chromosomes produced by recombining parents
 
   double mut_rate_;  // Mutation rate (fraction in range [0,1])
 
-  std::default_random_engine generator_; // A random number generator for the various methods
+//  unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+//  std::default_random_engine generator_; // A random number generator for the various methods
 };
 

@@ -13,7 +13,7 @@
 Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
 {
 	mut_rate_ = mut_rate;
-	for(int i = 0; i < pop_size; i++)
+	for(unsigned i = 0; i < pop_size; i++)
 	{
 		pop_.push_back(new Chromosome (cities_ptr));
 	}
@@ -38,20 +38,20 @@ Deme::~Deme()
 void Deme::compute_next_generation()
 {
 	child_pop_.clear();
-	while (child_pop_.size() < pop_size)
+	while (child_pop_.size() < pop_.size())
 	{
 		auto parent1 = select_parent();
 		auto parent2 = select_parent();
 
 		if (random_double() < mut_rate_)
 		{
-			parent1.mutate();
+			parent1->mutate();
 		}
 		if (random_double() < mut_rate_)
 		{
-			parent2.mutate();
+			parent2->mutate();
 		}
-		auto child_pair = parent1.recombine(parent2);
+		auto child_pair = parent1->recombine(parent2);
 		child_pop_.push_back(child_pair.first);
 		child_pop_.push_back(child_pair.second);
 	}
@@ -70,7 +70,7 @@ const Chromosome* Deme::get_best() const
 	auto best = pop_[0];
 	for (auto i:pop_)
 	{
-		if (i.get_fitness()>best.get_fitness())
+		if (i->get_fitness()>best->get_fitness())
 		{
 			best = i;
 		}
@@ -90,7 +90,7 @@ Chromosome* Deme::select_parent()
 
 	for(auto i:pop_)
 	{
-		current_total += i.get_fitness();
+		current_total += i->get_fitness();
 		if (current_total > target_fitness)
 		{
 			return i;
@@ -98,7 +98,7 @@ Chromosome* Deme::select_parent()
 	}
 
 	// if the sum never exceeds target, return last chromosome in the vector
-	return pop_.[pop.size()-1];
+	return pop_[pop_.size()-1];
 
 }
 
@@ -109,7 +109,7 @@ double Deme::total_fitness() const
 	double total = 0.;
 	for (auto i:pop_)
 	{
-		total+=i.get_fitness();
+		total+=i->get_fitness();
 	}
 	return total;
 }
@@ -118,8 +118,11 @@ double Deme::total_fitness() const
 
 double Deme::random_double() const
 {
+
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::default_random_engine generator_(seed); // A random number generator for the various methods
 	//generate a random double between 0 and 1
 	std::uniform_real_distribution<double> distribution(0.0,1.0);
-	generator_.seed(std::chrono::system_clock::now().time_since_epoch().count());
+//	generator_.seed(seed);
 	return distribution(generator_);
 }

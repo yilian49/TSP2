@@ -1,4 +1,4 @@
-/*
+ /*
  * Implementation for Chromosome class
  */
 
@@ -61,7 +61,7 @@ Chromosome::recombine(const Chromosome* other)
 	assert(is_valid());
 	assert(other->is_valid());
 
-	int half_order_size = order.size()/2;
+	int half_order_size = order_.size()/2;
 	std::uniform_int_distribution<> distribution(0,half_order_size);
 	
 	generator_.seed(std::chrono::system_clock::now().time_since_epoch().count());
