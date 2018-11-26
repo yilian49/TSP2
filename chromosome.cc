@@ -19,7 +19,7 @@ Chromosome::Chromosome(const Cities* cities_ptr)
     score_(get_fitness())
 {
   assert(is_valid());
-  std::cout << "Creation success";
+ // std::cout << "Creation success";
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -27,6 +27,7 @@ Chromosome::Chromosome(const Cities* cities_ptr)
 Chromosome::~Chromosome()
 {
   assert(is_valid());
+
 }
 
 
@@ -67,12 +68,14 @@ Chromosome::recombine(const Chromosome* other)
 	generator_.seed(std::chrono::system_clock::now().time_since_epoch().count());
 	auto begin = distribution(generator_);
 
+//	std::cout<<"\nThe generated range is:"<<begin<<"\t size is :"<<order_.size()<<"\n";
+
 	
 	std::pair<Chromosome*, Chromosome*> offspring_pair;
 	offspring_pair = 
 		std::make_pair(
-				create_crossover_child(this, other, begin, begin+half_order_size),
-				create_crossover_child(other, this, begin, begin+half_order_size));
+				create_crossover_child(this, other, begin, begin+half_order_size-1),
+				create_crossover_child(other, this, begin, begin+half_order_size-1));
 	return offspring_pair;
 }
 
