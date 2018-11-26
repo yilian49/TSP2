@@ -7,6 +7,7 @@
 #include <random>
 #include <stdlib.h>
 #include <time.h>
+#include <chrono>
 
 #include "chromosome.hh"
 
@@ -29,7 +30,7 @@ Chromosome::~Chromosome()
 }
 
 
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 // Perform a single mutation on this chromosome
 void
 Chromosome::mutate()
@@ -53,16 +54,28 @@ Chromosome::mutate()
 //////////////////////////////////////////////////////////////////////////////
 // Return a pair of offsprings by recombining with another chromosome
 // Note: this method allocates memory for the new offsprings
-/*
+
 std::pair<Chromosome*, Chromosome*>
 Chromosome::recombine(const Chromosome* other)
 {
-  assert(is_valid());
-  assert(other->is_valid());
+	assert(is_valid());
+	assert(other->is_valid());
 
-  // Add your implementation here
+	int half_order_size = order.size()/2;
+	std::uniform_int_distribution<> distribution(0,half_order_size);
+	
+	generator_.seed(std::chrono::system_clock::now().time_since_epoch().count());
+	auto begin = distribution(generator_);
+
+	
+	std::pair<Chromosome*, Chromosome*> offspring_pair;
+	offspring_pair = 
+		std::make_pair(
+				create_crossover_child(this, other, begin, begin+half_order_size),
+				create_crossover_child(other, this, begin, begin+half_order_size));
+	return offspring_pair;
 }
-*/
+
 //////////////////////////////////////////////////////////////////////////////
 // For an ordered set of parents, return a child using the ordered crossover.
 // The child will have the same values as p1 in the range [b,e),
